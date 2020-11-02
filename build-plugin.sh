@@ -6,5 +6,5 @@ echo "=============================================
 
 It's now built. You can find it at:
 
-$(find $PWD | grep "SNAPSHOT.zip")
+$(find $PWD/build/distributions | grep ".zip")
 "
