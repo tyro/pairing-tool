@@ -1,0 +1,44 @@
+<idea-plugin>
+    <id>com.tyro.oss.pairing</id>
+    <name>Pairing Tool</name>
+    <vendor email="opensource@tyro.com" url="https://www.tyro.com">Tyro Payments Limited</vendor>
+
+    <description><![CDATA[
+    This project is an attempt to stop the extreme cost of developer limbs.<br>
+    This will also reduce developer lifespans.
+    ]]></description>
+
+    <version>0.0.1</version>
+
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow
+                id="Pairing Tool"
+                anchor="bottom"
+                factoryClass="com.tyro.oss.pairing.toolwindow.PairingToolWindowFactory"
+                icon="/general/user.svg"
+
+        >
+        </toolWindow>
+        <applicationService serviceImplementation="com.tyro.oss.pairing.service.GsonFactory"/>
+    </extensions>
+
+    <actions>
+        <group id="MyPlugin.PairingMenu" text="_Pairing Menu" description="Pairing menu">
+            <action id="Myplugin.StartPairing" class="com.tyro.oss.pairing.menu.StartPairing" text="Start _Pairing"
+                    description="Pairing machine config"/>
+            <action id="Myplugin.SyncLocalChanges" class="com.tyro.oss.pairing.menu.SyncLocalChanges"
+                    text="Sync _Local Changes" description="Sync local changes"/>
+            <action id="Myplugin.StopPairing" class="com.tyro.oss.pairing.menu.StopPairing" text="Stop _Pairing"
+                    description="Stop pairing"/>
+        </group>
+    </actions>
+
+    <application-components>
+        <component>
+            <implementation-class>com.tyro.oss.pairing.PairingToolInitializer</implementation-class>
+        </component>
+    </application-components>
+
+</idea-plugin>
