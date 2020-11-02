@@ -8,7 +8,7 @@
     This will also reduce developer lifespans.
     ]]></description>
 
-    <version>0.0.1</version>
+    <version>beta-2.1</version>
 
     <depends>com.intellij.modules.lang</depends>
 

@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.tyro.oss.pairing'
-version '1.0-SNAPSHOT'
+version 'beta-2.1'
 
 repositories {
     mavenCentral()
