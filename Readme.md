@@ -7,7 +7,7 @@ This plugin has been designed to make pairing more natural for developers using 
 
 ## Installation
 
-Stable releases are being released all of the time. See [releases](https://github.com/tyro-private/scotty-pairing-tool/releases) for the latest
+Stable releases are being released all of the time. See [releases](https://github.com/tyro/pairing-tool/releases) for the latest
 
 For un-released code use:
 ```bash
