@@ -1,5 +1,6 @@
 # IntelliJ Pairing Plugin
 
+[![Build Status](https://travis-ci.org/tyro/pairing-tool.svg?branch=master)](https://travis-ci.org/tyro/pairing-tool)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 This plugin has been designed to make pairing more natural for developers using different machines.
