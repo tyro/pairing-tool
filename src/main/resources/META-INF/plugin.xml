@@ -1,14 +1,22 @@
 <idea-plugin>
     <id>com.tyro.oss.pairing</id>
     <name>Pairing Tool</name>
-    <vendor email="opensource@tyro.com" url="https://www.tyro.com">Tyro Payments Limited</vendor>
+    <vendor email="pairing-tool@tyro.com" url="https://www.tyro.com">Tyro Payments Limited</vendor>
 
-    <description><![CDATA[
-    This project is an attempt to stop the extreme cost of developer limbs.<br>
-    This will also reduce developer lifespans.
+    <idea-version since-build="1" until-build="1"/>
+
+    <description><![CDATA[This project is an attempt to encourage pairing across an organisation.<br>
+<br>
+This project uses a kafka cluster to facilitate near real time communication between any number of developers.<br>
+It relies on the pairing concept, that only one developer at a time is using the keyboard, and thus there is no conflict resolution (last update wins).<br>
+It will also kick off a test that one developer invokes on all other developers connected.<br>
+<br>
+Give it a try and your feedback is welcome.<br>
+<br>
+See Open Source Project https://github.com/tyro/pairing-tool for more information</p>
     ]]></description>
 
-    <version>beta-2.1</version>
+    <version>local</version>
 
     <depends>com.intellij.modules.lang</depends>
 
@@ -41,4 +49,7 @@
         </component>
     </application-components>
 
+    <change-notes><![CDATA[
+Initial release to the jetbrains plugin store.
+    ]]></change-notes>
 </idea-plugin>
