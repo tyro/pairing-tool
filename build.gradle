@@ -32,13 +32,13 @@ intellij {
     runIde {
         jbrVersion 'jbrex8u202b1483.4'
     }
-    intellij.updateSinceUntilBuild false
 }
 
 patchPluginXml {
-    changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+    changeNotes """This is the first upload of the pairing tool to the jetbrains plugin repo.<br>
+<br>
+Please report any and all bugs you find to https://github.com/tyro/pairing-tool/issues."""
+    version project.version
 }
 
 license {

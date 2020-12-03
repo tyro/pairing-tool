@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-./gradlew licenseFormat buildPlugin
+./gradlew clean licenseFormat patchPluginXml buildPlugin
 
 echo "=============================================
 
