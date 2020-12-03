@@ -7,11 +7,13 @@ This plugin has been designed to make pairing more natural for developers using 
 
 ## Installation
 
-Stable releases are being released all of the time. See [releases](https://github.com/tyro/pairing-tool/releases) for the latest
+Releases are being released all of the time. Add the https://plugins.jetbrains.com/plugins/beta/list to your "Manage plugin repositories". Then just search for the plugin and let intellij and our team manage it for you.
+
+![intellij plugin installation](img/intellij_plugin_installation.png)
 
 For un-released code use:
 ```bash
-./install-plugin.sh
+./build-plugin.sh
 ```
 
 ## Run a kafka image somewhere
