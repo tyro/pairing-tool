@@ -25,9 +25,7 @@ See Open Source Project https://github.com/tyro/pairing-tool for more informatio
                 id="Pairing Tool"
                 anchor="bottom"
                 factoryClass="com.tyro.oss.pairing.toolwindow.PairingToolWindowFactory"
-                icon="/general/user.svg"
-
-        >
+                icon="/META-INF/pairing_tool_icon_16.svg">
         </toolWindow>
         <applicationService serviceImplementation="com.tyro.oss.pairing.service.GsonFactory"/>
     </extensions>
