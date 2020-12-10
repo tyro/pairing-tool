@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.tyro.oss.pairing'
-version 'beta-2.1'
+version 'beta-2.2'
 
 repositories {
     mavenCentral()
@@ -28,14 +28,18 @@ compileTestKotlin {
 }
 
 intellij {
-    version '2020.2.1'
-    runIde {
-        jbrVersion 'jbrex8u202b1483.4'
-    }
+    version '2020.3'
 }
 
 patchPluginXml {
-    changeNotes """This is the first upload of the pairing tool to the jetbrains plugin repo.<br>
+    changeNotes """09/12/2020<br>
+Add support for 2020.3<br>
+<br>
+08/12/2020<br>
+Added a custom Icon.<br>
+<br>
+03/12/2020<br>
+This is the first upload of the pairing tool to the jetbrains plugin repo.<br>
 <br>
 Please report any and all bugs you find to https://github.com/tyro/pairing-tool/issues."""
     version project.version
