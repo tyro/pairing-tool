@@ -16,15 +16,25 @@
 package com.tyro.oss.pairing.toolwindow
 
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.wm.ToolWindow
+import com.intellij.openapi.wm.ToolWindowAnchor
 import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.ui.content.ContentFactory
+import com.intellij.util.IconUtil
 
 class PairingToolWindowFactory : ToolWindowFactory {
+
+
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
+        val toolbarIcon = IconLoader.findIcon("/META-INF/pluginIcon.svg")
+        val toolbarIcon13 = IconUtil.toSize(toolbarIcon!!, 13, 13)
+
         val myToolWindow = PairingToolWindow()
         val contentFactory = ContentFactory.SERVICE.getInstance()
         val content = contentFactory.createContent(myToolWindow.getContent(), "Your Pairing Session", false)
+        toolWindow.setIcon(toolbarIcon13)
+        toolWindow.setAnchor(ToolWindowAnchor.BOTTOM, null)
         toolWindow.contentManager.addContent(content)
     }
 }

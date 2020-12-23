@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.tyro.oss.pairing'
-version 'beta-2.2'
+version '3.0'
 
 repositories {
     mavenCentral()
@@ -32,7 +32,7 @@ intellij {
 }
 
 patchPluginXml {
-    changeNotes """09/12/2020<br>
+    changeNotes """24/12/2020<br>
 Add support for 2020.3<br>
 <br>
 08/12/2020<br>
