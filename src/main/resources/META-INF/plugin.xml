@@ -21,12 +21,7 @@ See Open Source Project https://github.com/tyro/pairing-tool for more informatio
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow
-                id="Pairing Tool"
-                anchor="bottom"
-                factoryClass="com.tyro.oss.pairing.toolwindow.PairingToolWindowFactory"
-                icon="/META-INF/pairing_tool_icon_16.svg">
-        </toolWindow>
+        <toolWindow id="Pairing Tool" factoryClass="com.tyro.oss.pairing.toolwindow.PairingToolWindowFactory"/>
         <applicationService serviceImplementation="com.tyro.oss.pairing.service.GsonFactory"/>
     </extensions>
 
