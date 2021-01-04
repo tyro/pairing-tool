@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'com.tyro.oss.pairing'
-version '3.0'
+version project.hasProperty('version') ? project.getProperty('version') : '3.0'
 
 repositories {
     mavenCentral()
@@ -28,11 +28,14 @@ compileTestKotlin {
 }
 
 intellij {
-    version '2020.3'
+    version '2020.3.1'
 }
 
 patchPluginXml {
-    changeNotes """24/12/2020<br>
+    changeNotes """04/01/2021<br>
+Tested on 2020.3.1<br>
+<br>
+24/12/2020<br>
 Add support for 2020.3<br>
 <br>
 08/12/2020<br>
@@ -50,4 +53,9 @@ license {
     strictCheck true
     include "**/*.kt"
     ext.year = Calendar.getInstance().get(Calendar.YEAR)
+}
+
+publishPlugin {
+    token project.hasProperty('token') ? project.getProperty('token') : 'secret'
+    channels project.hasProperty('channels') ? project.getProperty('channels') : 'nightly'
 }
