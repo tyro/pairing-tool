@@ -6,9 +6,15 @@ VERSION="3.1.$(date +"%s")"
 # Blank channel is the main release channel
 CHANNEL=
 
-
-
-./gradlew clean licenseFormat patchPluginXml buildPlugin publishPlugin -Pversion=$VERSION -Ptoken=$TOKEN =Pchannels=$CHANNEL
+./gradlew \
+  clean \
+  licenseFormat \
+  patchPluginXml \
+  buildPlugin \
+  publishPlugin \
+    -Pversion=$VERSION \
+    -Ptoken=$TOKEN \
+    -Pchannels=$CHANNEL
 
 github-release ${VERSION} build/libs/* \
 		--tag ${VERSION} \
