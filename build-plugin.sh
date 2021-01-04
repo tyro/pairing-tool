@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-./gradlew clean licenseFormat patchPluginXml buildPlugin
+VERSION="3.1.$(date +"%s")"
+
+./gradlew clean licenseFormat patchPluginXml buildPlugin -Pversion=$VERSION
 
 echo "=============================================
 
