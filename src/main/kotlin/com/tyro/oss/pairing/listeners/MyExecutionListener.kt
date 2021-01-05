@@ -17,22 +17,19 @@ package com.tyro.oss.pairing.listeners
 
 import com.intellij.execution.ExecutionListener
 import com.intellij.execution.runners.ExecutionEnvironment
-import com.intellij.openapi.diagnostic.Logger
 import com.tyro.oss.pairing.handler.ExecutionOperationEvent
 
 class MyExecutionListener(
     private val runOperationCallBack: (ExecutionOperationEvent) -> Unit
 ) : ExecutionListener {
-    companion object {
-        private val LOG = Logger.getInstance(MyExecutionListener::class.java)
-    }
-
     override fun processStartScheduled(executorId: String, env: ExecutionEnvironment) {
-        val runnerAndConfigurationSettings = env.runnerAndConfigurationSettings
-        runOperationCallBack(
-            ExecutionOperationEvent(
-            runnerAndConfigurationSettings!!.configuration.project.name,
-            runnerAndConfigurationSettings.configuration.name)
-        )
+        env.runnerAndConfigurationSettings?.let {
+            runOperationCallBack(
+                ExecutionOperationEvent(
+                    it.configuration.project.name,
+                    it.configuration.name
+                )
+            )
+        }
     }
 }

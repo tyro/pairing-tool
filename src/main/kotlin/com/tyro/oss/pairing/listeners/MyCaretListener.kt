@@ -33,18 +33,19 @@ class MyCaretListener(
         val editor = event.editor
         try {
             val document = editor.document
-            val project = editor.project!!
-            FileDocumentManager.getInstance().getFile(document)?.let {
-                val projectFilePrefix = "file://" + project.basePath.toString()
-                if (it.url.startsWith(projectFilePrefix)) {
-                    cursorChangedCallback(
-                        CursorChangeEvent(
-                            "",
-                            event.newPosition,
-                            it.url.replace("file://" + project.basePath.toString(), ""),
-                            project.name
+            editor.project?.let{ project ->
+                FileDocumentManager.getInstance().getFile(document)?.let {
+                    val projectFilePrefix = "file://" + project.basePath.toString()
+                    if (it.url.startsWith(projectFilePrefix)) {
+                        cursorChangedCallback(
+                            CursorChangeEvent(
+                                "",
+                                event.newPosition,
+                                it.url.replace("file://" + project.basePath.toString(), ""),
+                                project.name
+                            )
                         )
-                    )
+                    }
                 }
             }
         } catch (e: Exception) {
