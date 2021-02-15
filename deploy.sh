@@ -16,7 +16,5 @@ CHANNEL=
     -Ptoken=$TOKEN \
     -Pchannels=$CHANNEL
 
-github-release ${VERSION} build/libs/* \
-		--tag ${VERSION} \
-		--github-repository "tyro/pairing-tool" \
-		--github-access-token ${TOKEN};
+gh release create ${VERSION} build/distributions/* \
+  -t ${VERSION}
