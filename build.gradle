@@ -28,11 +28,14 @@ compileTestKotlin {
 }
 
 intellij {
-    version '2020.3.1'
+    version '2020.3.2'
 }
 
 patchPluginXml {
-    changeNotes """04/01/2021<br>
+    changeNotes """16/02/2021<br>
+Tested on 2020.3.2<br>
+<br>
+04/01/2021<br>
 Tested on 2020.3.1<br>
 <br>
 24/12/2020<br>
