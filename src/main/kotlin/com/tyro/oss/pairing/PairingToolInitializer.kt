@@ -73,6 +73,7 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
     private lateinit var messageBus: MessageBus
     private val editorService = EventProcessorService()
     private val hostName = "${InetAddress.getLocalHost().hostName}_${Random().nextInt(100)}"
+    private val userName = System.getProperty("user.name")
     private val eventMulticaster = EditorFactory.getInstance().eventMulticaster
 
     private val gson = GsonFactory.getInstance().gson
@@ -82,6 +83,7 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
             outgoingQueue.putEvent(
                 Event(
                     hostName,
+                    userName,
                     "ProjectSyncEvent",
                     gson.toJson(event)
                 )
@@ -127,7 +129,7 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
                 pollFileTouched()?.let {
                     val (projectName, fileUrl) = it
                     ApplicationManager.getApplication().runReadAction {
-                        publishFileContents(projectName, fileUrl, hostName)
+                        publishFileContents(projectName, fileUrl)
                     }
                 }
             }
@@ -170,7 +172,7 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
     }
 
     private fun pushEventToOutgoingQueue(it: CustomEvent) {
-        outgoingQueue.putEvent(Event(hostName, it::class.java.name.substringAfterLast('.'), gson.toJson(it)))
+        outgoingQueue.putEvent(Event(hostName, userName, it::class.java.name.substringAfterLast('.'), gson.toJson(it)))
     }
 
     private fun destroyListeners() {
@@ -250,8 +252,7 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
 
     private fun publishFileContents(
         projectName: String,
-        fileUrl: String,
-        hostName: String
+        fileUrl: String
     ) {
         try {
             val fileContents = getFileContents(projectName, fileUrl)
@@ -259,6 +260,7 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
                 putOutgoingQueueEvent(
                     Event(
                         hostName,
+                        userName,
                         "FileSinkEvent",
                         GsonFactory.getInstance().gson.toJson(
                             FileSinkEvent(

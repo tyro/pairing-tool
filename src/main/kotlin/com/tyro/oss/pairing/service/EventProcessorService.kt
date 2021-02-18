@@ -29,7 +29,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.VirtualFileManager
-import com.intellij.util.LocalTimeCounter
 import com.intellij.util.io.exists
 import com.tyro.oss.pairing.handler.*
 import com.tyro.oss.pairing.queue.Event
@@ -48,7 +47,7 @@ class EventProcessorService {
 
     fun applyEvent(event: Event) {
         pingPongBlocker.closeOutgoingQueueTemporarily(TIMEOUT_IN_MILLIS)
-        notificationBalloonService.displayBalloonNotification(event.originHost, TIMEOUT_IN_MILLIS)
+        notificationBalloonService.displayBalloonNotification(event.originUser ?: event.originHost, TIMEOUT_IN_MILLIS)
         try {
             when (event.type) {
                 "CursorChangeEvent" -> {
