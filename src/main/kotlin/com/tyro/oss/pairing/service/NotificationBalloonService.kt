@@ -30,13 +30,13 @@ class NotificationBalloonService {
     var balloon: Balloon? = null
     var timer: Timer = Timer()
 
-    fun displayBalloonNotification(originHost: String, timeout: Long) {
+    fun displayBalloonNotification(userName: String, timeout: Long) {
         statusBar = WindowManager.getInstance()
             .getStatusBar(PairingToolInitializer.getInstance()!!.project)
 
         if (balloon == null || (balloon != null && balloon!!.isDisposed)) {
             balloon = JBPopupFactory.getInstance()
-                .createHtmlTextBalloonBuilder("$originHost is Active", MessageType.INFO, null)
+                .createHtmlTextBalloonBuilder("$userName is active", MessageType.INFO, null)
                 .createBalloon()
             balloon!!
                 .show(

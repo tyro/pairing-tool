@@ -51,6 +51,7 @@ class FileEventQueue {
 
 data class Event(
     val originHost : String,
+    val originUser : String?,
     val type: String,
     val payload: String
 )
