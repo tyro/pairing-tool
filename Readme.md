@@ -7,9 +7,11 @@ This plugin has been designed to make pairing more natural for developers using 
 
 ## Installation
 
-Releases are being released all of the time. Add the https://plugins.jetbrains.com/plugins/beta/list to your "Manage plugin repositories". Then just search for the plugin and let intellij and our team manage it for you.
+Installation is now super simple. Just search the Jetbrains store for `pairing tool`
 
 ![intellij plugin installation](img/intellij_plugin_installation.png)
+
+Note: If you have installed this plugin via any of the older means, you will have to uninstall it and reinstall it from the store so that the IntelliJ store will manage the versions for you. 
 
 For un-released code use:
 ```bash
