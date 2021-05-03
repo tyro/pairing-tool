@@ -36,8 +36,6 @@ class KafkaClient(
 
     companion object {
         private val LOG = Logger.getInstance(KafkaClient::class.java)
-        const val URL_ID = "kafkaUrl"
-        const val WORKSPACE_ID = "worspaceId"
     }
 
     private val serializer = StringSerializer::class.java
