@@ -1,0 +1,11 @@
+{
+  "name": "web-socket-node",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.1.2"
+  },
+  "scripts": {
+    "run": "node index.js"
+  }
+}
