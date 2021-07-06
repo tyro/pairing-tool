@@ -5,8 +5,12 @@ router.get("/alive", (req, res, next) => {
     res.send('{"alive":"yes"}')
 });
 
-router.get("/healthy", (req, res, next) => {
-    res.send('{"health":"ok"}')
+router.get("/ready", (req, res, next) => {
+    res.send('{"ready":"ok"}')
+});
+
+router.get("/", (req, res, next) => {
+    res.send('{"ready":"ok"}')
 });
 
 module.exports = router
