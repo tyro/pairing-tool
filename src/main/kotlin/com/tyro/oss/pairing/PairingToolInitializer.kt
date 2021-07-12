@@ -15,6 +15,7 @@
  */
 package com.tyro.oss.pairing
 
+import com.esotericsoftware.minlog.Log
 import com.intellij.execution.ExecutionManager
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.PersistentStateComponent
@@ -34,8 +35,11 @@ import com.tyro.oss.pairing.handler.FileSinkEvent
 import com.tyro.oss.pairing.listeners.*
 import com.tyro.oss.pairing.queue.Event
 import com.tyro.oss.pairing.queue.FileEventQueue
+import com.tyro.oss.pairing.server.ServerType
+import com.tyro.oss.pairing.server.WebSocketServer
 import com.tyro.oss.pairing.service.EventProcessorService
 import com.tyro.oss.pairing.service.GsonFactory
+import io.ktor.websocket.*
 import java.net.InetAddress
 import java.util.*
 import java.util.concurrent.BlockingQueue
@@ -53,13 +57,14 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
     }
 
     data class PairingToolState(
+        var serverType: ServerType = ServerType.Kafka,
         var kafkaUrl: String? = null,
         var workspaceName: String? = null
     )
 
     private var state: PairingToolState = PairingToolState()
 
-    private var kafkaClient: KafkaClient? = null
+    private var server: ServerInterface? = null
 
     private var firstRun = true
     private val outgoingQueue = FileEventQueue()
@@ -100,8 +105,8 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
 
         ApplicationManager.getApplication().executeOnPooledThread {
             while (true) {
-                if (kafkaClient != null) {
-                    kafkaClient?.produce(outgoingQueue.getEvent())
+                if (server != null) {
+                    server?.produce(outgoingQueue.getEvent())
                 } else {
                     Thread.sleep(1000)
                 }
@@ -110,7 +115,7 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
 
         ApplicationManager.getApplication().executeOnPooledThread {
             while (true) {
-                kafkaClient?.consume()?.let { list ->
+                server?.consume()?.let { list ->
                     LOG.info("Incoming : ${list.size}")
 
                     list.filter { it.originHost != hostName }
@@ -196,11 +201,23 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
     }
 
     fun startPairing() {
-        this.state.kafkaUrl?.let { kafkaUrl ->
-            this.state.workspaceName?.let { workspaceName ->
-                this.kafkaClient = KafkaClient(kafkaUrl, workspaceName)
+        if(this.state.serverType == ServerType.Kafka) {
+            this.state.kafkaUrl?.let { kafkaUrl ->
+                this.state.workspaceName?.let { workspaceName ->
+                    this.server = KafkaClient(kafkaUrl, workspaceName)
+                }
             }
+        } else if(this.state.serverType == ServerType.WebSocket) {
+            this.state.kafkaUrl?.let { kafkaUrl ->
+                this.state.workspaceName?.let { workspaceName ->
+                    this.server = WebSocketServer(kafkaUrl, workspaceName)
+                }
+            }
+        } else {
+            Log.error("ServerType ${this.state.serverType} is unsupported.")
+            return
         }
+
         initListeners()
         if (firstRun) {
             initThreads()
@@ -213,8 +230,8 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
     }
 
     fun stopPairing() {
-        kafkaClient?.close()
-        kafkaClient = null
+        server?.close()
+        server = null
         incomingQueue.clear()
         outgoingQueue.clear()
         incomingQueue.close()
@@ -228,13 +245,19 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
         this.state.kafkaUrl = kafkaUrl
     }
 
+    fun getServerType() = this.state.serverType
+
+    fun setServerType(serverType: ServerType) {
+        this.state.serverType = serverType
+    }
+
     fun getWorkspaceName() = this.state.workspaceName
 
     fun setWorkspaceName(workspaceName: String) {
         this.state.workspaceName = workspaceName
     }
 
-    fun isPairing(): Boolean = (kafkaClient != null)
+    fun isPairing(): Boolean = (server != null)
 
     fun putOutgoingQueueEvent(event: Event) = outgoingQueue.putEvent(event)
 

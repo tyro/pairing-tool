@@ -17,6 +17,7 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-api'
     }
     implementation "com.google.code.gson:gson:2.8.6"
+    implementation "io.socket:socket.io-client:2.0.1"
 }
 
 compileKotlin {

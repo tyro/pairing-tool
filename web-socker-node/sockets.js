@@ -1,6 +1,4 @@
 
-let interval;
-
 module.exports = {
     websocket: (socket) => {
         console.log("connected...")
@@ -12,6 +10,7 @@ module.exports = {
             socket.join(sessionId);
         });
         socket.on("Event", (sessionId, event) => {
+            console.log(`Event: ${sessionId} ${event}`)
             socket.to(sessionId).emit("FromServer", event);
         });
     }

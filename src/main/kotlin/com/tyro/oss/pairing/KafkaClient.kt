@@ -28,11 +28,10 @@ import java.time.Duration
 import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 
-
 class KafkaClient(
     machineName: String,
     private val topic: String
-) {
+) : ServerInterface {
 
     companion object {
         private val LOG = Logger.getInstance(KafkaClient::class.java)
@@ -71,7 +70,7 @@ class KafkaClient(
         consumer.subscribe(listOf(topic))
     }
 
-    fun consume(): List<Event> {
+    override fun consume(): List<Event> {
         try {
             val records = consumer.poll(Duration.ofMillis(10000))
             return records.mapNotNull {
@@ -87,13 +86,12 @@ class KafkaClient(
         return emptyList()
     }
 
-
-    fun produce(event: Event) {
+    override fun produce(event: Event) {
         producer.send(ProducerRecord<String, String>(topic, gson.toJson(event)))
         LOG.info("sent message ${gson.toJson(event)}")
     }
 
-    fun close() {
+    override fun close() {
         closed.set(true)
         consumer.wakeup()
     }
