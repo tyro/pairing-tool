@@ -15,7 +15,6 @@
  */
 package com.tyro.oss.pairing
 
-import com.esotericsoftware.minlog.Log
 import com.intellij.execution.ExecutionManager
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.PersistentStateComponent
@@ -39,7 +38,6 @@ import com.tyro.oss.pairing.server.ServerType
 import com.tyro.oss.pairing.server.WebSocketServer
 import com.tyro.oss.pairing.service.EventProcessorService
 import com.tyro.oss.pairing.service.GsonFactory
-import io.ktor.websocket.*
 import java.net.InetAddress
 import java.util.*
 import java.util.concurrent.BlockingQueue
@@ -58,7 +56,7 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
 
     data class PairingToolState(
         var serverType: ServerType = ServerType.Kafka,
-        var kafkaUrl: String? = null,
+        var serverUrl: String? = null,
         var workspaceName: String? = null
     )
 
@@ -201,21 +199,21 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
     }
 
     fun startPairing() {
-        if(this.state.serverType == ServerType.Kafka) {
-            this.state.kafkaUrl?.let { kafkaUrl ->
-                this.state.workspaceName?.let { workspaceName ->
-                    this.server = KafkaClient(kafkaUrl, workspaceName)
-                }
+        when (this.state.serverType) {
+            ServerType.Kafka -> {
+                this.state.serverUrl?.let { kafkaUrl ->
+                    this.state.workspaceName?.let { workspaceName ->
+                        this.server = KafkaClient(kafkaUrl, workspaceName)
+                    }
+                } ?: LOG.warn("Not enough information to start. ${ServerType.Kafka} ${gson.toJson(this.state)}")
             }
-        } else if(this.state.serverType == ServerType.WebSocket) {
-            this.state.kafkaUrl?.let { kafkaUrl ->
-                this.state.workspaceName?.let { workspaceName ->
-                    this.server = WebSocketServer(kafkaUrl, workspaceName)
-                }
+            ServerType.WebSocket -> {
+                this.state.serverUrl?.let { kafkaUrl ->
+                    this.state.workspaceName?.let { workspaceName ->
+                        this.server = WebSocketServer(kafkaUrl, workspaceName)
+                    }
+                } ?: LOG.warn("Not enough information to start. ${ServerType.Kafka} ${gson.toJson(this.state)}")
             }
-        } else {
-            Log.error("ServerType ${this.state.serverType} is unsupported.")
-            return
         }
 
         initListeners()
@@ -239,10 +237,10 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
         destroyListeners()
     }
 
-    fun getKafkaUrl() = this.state.kafkaUrl
+    fun getKafkaUrl() = this.state.serverUrl
 
     fun setKafkaUrl(kafkaUrl: String) {
-        this.state.kafkaUrl = kafkaUrl
+        this.state.serverUrl = kafkaUrl
     }
 
     fun getServerType() = this.state.serverType
