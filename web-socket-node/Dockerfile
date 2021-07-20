@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:14 as builder
 
 WORKDIR /usr/src/app
 
@@ -8,7 +8,12 @@ RUN npm install
 
 COPY . .
 
-ENV PORT=4001
-EXPOSE 4001
+FROM gcr.io/distroless/nodejs:14 as runner
 
-ENTRYPOINT ["node", "server.js"]
+WORKDIR /usr/src/app
+
+ENV PORT=4001
+
+COPY --from=builder /usr/src/app .
+
+CMD ["./server.js"]
