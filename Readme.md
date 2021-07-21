@@ -25,14 +25,18 @@ For un-released code use:
 
 ## Connect to a workspace
 
-![PairingPanel](PairingPanel.png)
+![PairingPanel](img/intellij_plugin_installation_kafka.png)
+
+![PairingPanel](img/intellij_plugin_installation_web_socket.png)
 
 To connect to a session just navigate to the Pairing Tool panel.
-1) Put in a kafka server: <kafka.example.com>
-2) Give your session a name: <AUniqueSessionName>
-3) Tell your pair to use the same settings
+1) Choose the server type: (Kafka | WebSocket)
+2) Put in a Host Url: <kafka.example.com> | http://example-server:4001
+3) Give your session a name: \<exampleSession>
+4) Tell your pair to use the same settings
 
-Note: Use a unique session name so that you don't push updates to others who don't want them
+Note: Use a unique session name so that you don't push updates to others who don't want them\
+Note: For the websocket URL. Please use a valid URL including scheme (http), domain name and port
 
 ## Copyright and Licensing
 
