@@ -113,12 +113,16 @@ class PairingToolInitializer : PersistentStateComponent<PairingToolState> {
 
         ApplicationManager.getApplication().executeOnPooledThread {
             while (true) {
-                server?.consume()?.let { list ->
-                    LOG.info("Incoming : ${list.size}")
+                try {
+                    server?.consume()?.let { list ->
+                        LOG.info("Incoming : ${list.size}")
 
-                    list.filter { it.originHost != hostName }
-                        .forEach { incomingQueue.putEvent(it) }
-                } ?: Thread.sleep(1000)
+                        list.filter { it.originHost != hostName }
+                            .forEach { incomingQueue.putEvent(it) }
+                    } ?: Thread.sleep(1000)
+                } catch (e: Exception) {
+                    LOG.error("Something went wrong consuming from websocket. Auto recovering", e)
+                }
             }
         }
 
