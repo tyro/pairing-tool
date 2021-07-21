@@ -19,11 +19,14 @@ import com.intellij.openapi.actionSystem.ActionGroup
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.actionSystem.Separator
+import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.SimpleToolWindowPanel
+import com.intellij.ui.CollectionComboBoxModel
 import com.intellij.ui.TextFieldWithHistory
 import com.intellij.ui.layout.panel
 import com.tyro.oss.pairing.PairingToolInitializer
 import com.tyro.oss.pairing.listeners.KeyChangeListener
+import com.tyro.oss.pairing.server.ServerType
 import java.awt.Dimension
 import java.util.*
 import javax.swing.JPanel
@@ -51,7 +54,19 @@ class PairingToolWindow {
 
     private fun mainContent() =
         panel {
-            row(" Kafka Url") {
+            row(" Server Type:") {
+                cell {
+                    comboBox(
+                        CollectionComboBoxModel(
+                            listOf(ServerType.Kafka, ServerType.WebSocket),
+                            PairingToolInitializer.getInstance()?.getServerType() ?: ServerType.Kafka
+                        )
+                    ) {
+                        PairingToolInitializer.getInstance()?.setServerType(it)
+                    }()
+                }
+            }
+            row(" Host Url") {
                 cell {
                     defaultTextFieldWithHistory(
                         PairingToolInitializer.getInstance()?.getKafkaUrl() ?: ""
@@ -70,6 +85,19 @@ class PairingToolWindow {
                 }
             }
         }
+
+    private fun comboBox(model: CollectionComboBoxModel<ServerType>, callback: ((text: ServerType) -> Unit)?) =
+        ComboBox(model, DEFAULT_WIDTH).apply {
+            preferredSize = Dimension(DEFAULT_WIDTH, preferredSize.height)
+            callback?.let {
+                addActionListener { event ->
+                    (event.source as? ComboBox<ServerType>)?.let {
+                        callback(it.item)
+                    }
+                }
+            }
+        }
+
 
     private fun defaultTextFieldWithHistory(vararg historyItems: String, callback: ((text: String) -> Unit)?) =
         TextFieldWithHistory().apply {
