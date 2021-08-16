@@ -11,7 +11,7 @@ Installation is now super simple. Just search the Jetbrains store for `pairing t
 
 ![intellij plugin installation](img/intellij_plugin_installation.png)
 
-Note: If you have installed this plugin via any of the older means, you will have to uninstall it and reinstall it from the store so that the IntelliJ store will manage the versions for you. 
+Note: If you have installed this plugin manually, you will have to uninstall it and reinstall it from the store to allow the jetbrains store to manage the versions for you. 
 
 For un-released code use:
 ```bash
@@ -22,6 +22,10 @@ For un-released code use:
 ```bash
 ./run-kafka.sh
 ```
+
+## Or Run a pairing-tool-websocket-server image somewhere
+
+See README instructions [here](https://github.com/tyro/pairing-tool-websocket-server)
 
 ## Connect to a workspace
 
