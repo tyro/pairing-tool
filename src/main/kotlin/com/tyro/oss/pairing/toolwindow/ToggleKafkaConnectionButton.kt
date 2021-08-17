@@ -37,11 +37,11 @@ class ToggleKafkaConnectionButton : AnActionButton(START_TEXT, START_ICON) {
     override fun actionPerformed(e: AnActionEvent) {
         val app = ApplicationManager.getApplication().getComponent(PairingToolInitializer::class.java)
         if(app?.isPairing() == true) {
-            ActionManager.getInstance().getActionOrStub(
+            ActionManager.getInstance().getAction(
                 StopPairing.STOP_PAIRING_ID
             )?.actionPerformed(e)
         } else {
-            ActionManager.getInstance().getActionOrStub(
+            ActionManager.getInstance().getAction(
                 StartPairing.START_PARING_ID
             )?.actionPerformed(e)
         }
