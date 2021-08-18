@@ -37,7 +37,7 @@ class WebSocketServer(
     private val blockingQueue: BlockingQueue<String> = LinkedBlockingQueue()
 
     companion object {
-        private val LOG = Logger.getInstance(KafkaClient::class.java)
+        private val LOG = Logger.getInstance(WebSocketServer::class.java)
     }
 
     init {
