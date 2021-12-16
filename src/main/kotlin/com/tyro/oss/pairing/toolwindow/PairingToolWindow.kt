@@ -98,7 +98,6 @@ class PairingToolWindow {
             }
         }
 
-
     private fun defaultTextFieldWithHistory(vararg historyItems: String, callback: ((text: String) -> Unit)?) =
         TextFieldWithHistory().apply {
             history = historyItems.asList()
