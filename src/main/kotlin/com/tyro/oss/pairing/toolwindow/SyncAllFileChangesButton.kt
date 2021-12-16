@@ -32,7 +32,7 @@ class SyncAllFileChangesButton : AnActionButton(ICON_TEXT, ICON) {
 
     override fun actionPerformed(e: AnActionEvent) {
         ActionManager.getInstance()
-            .getActionOrStub(SyncLocalChanges.PUSH_LOCAL_CHANGES_ID)?.actionPerformed(e)
+            .getAction(SyncLocalChanges.PUSH_LOCAL_CHANGES_ID)?.actionPerformed(e)
     }
 
     override fun updateButton(e: AnActionEvent) {
